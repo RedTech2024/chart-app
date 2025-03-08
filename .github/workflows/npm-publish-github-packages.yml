@@ -21,7 +21,6 @@ jobs:
           node-version: 20
           cache: 'npm'
           registry-url: https://npm.pkg.github.com/
-      - run: npm cache clean --force
       - run: npm ci
       - run: npm run build
       - run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" > .npmrc
@@ -30,6 +29,7 @@ jobs:
           name: chart-app-dist
           path: dist
           retention-days: 1
+
   deploy:
     needs: build
     runs-on: ubuntu-latest
@@ -44,8 +44,6 @@ jobs:
           node-version: 20
           registry-url: https://npm.pkg.github.com/
           scope: '@githubusername'
-      - run: npm cache clean --force
-      - run: npm ci
       - uses: actions/download-artifact@v4
         with:
           name: chart-app-dist
