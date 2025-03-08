@@ -22,6 +22,8 @@ jobs:
           cache: 'npm'
       - run: npm ci
       - run: npm run build
+      - run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" > .npmrc
+      - run: npm publish --registry=https://npm.pkg.github.com
       - uses: actions/upload-artifact@v4
         with:
           name: chart-app-dist
@@ -33,17 +35,17 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      packages: write
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: https://npm.pkg.github.com
       - uses: actions/download-artifact@v4
         with:
           name: chart-app-dist
           path: dist
-      - uses: softprops/action-gh-release@v1
-        if: github.event_name == 'release'
-        with:
-          files: |
-            dist/**/*
-          generate_release_notes: true
+      - run: npm publish --registry=https://npm.pkg.github.com
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
