@@ -20,52 +20,36 @@ jobs:
         with:
           node-version: 20
           cache: 'npm'
-          registry-url: https://npm.pkg.github.com/  # 新增registry配置
+          registry-url: https://npm.pkg.github.com/
       - run: npm ci
       - run: npm run build
       - run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" > .npmrc
-      # 移除 build 阶段的 publish 步骤（避免重复发布）
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read  # 修正为读权限
-      packages: write
-      id-token: write  # 新增身份验证权限
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          registry-url: https://npm.pkg.github.com/
-          scope: '@githubusername'  # 新增scope配置
-      - run: npm pkg fix  # 自动修复package.json问题
-      - run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/upload-artifact@v4
         with:
           name: chart-app-dist
           path: dist
           retention-days: 1
 
+  # Consolidate into single deploy job
   deploy:
     needs: build
     runs-on: ubuntu-latest
     permissions:
-      contents: write  # 增加写权限
+      contents: read
       packages: write
+      id-token: write
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          registry-url: https://npm.pkg.github.com
+          registry-url: https://npm.pkg.github.com/
+          scope: '@githubusername'
       - uses: actions/download-artifact@v4
         with:
           name: chart-app-dist
           path: dist
-      - run: npm publish --registry=https://npm.pkg.github.com
+      - run: npm pkg fix
+      - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
