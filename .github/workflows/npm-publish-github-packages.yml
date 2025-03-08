@@ -36,7 +36,7 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write  # 增加写权限
       packages: write
     steps:
       - uses: actions/checkout@v4
