@@ -3,7 +3,7 @@
   "private": false,
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/yourusername/chart-app.git"
+    "url": "git+https://github.com/redtech2024/chart-app.git"
   },
   "version": "0.0.0",
   "type": "module",
