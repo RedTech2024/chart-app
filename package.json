@@ -1,27 +1,13 @@
 {
-  "name": "@githubusername/chart-app",
-  "version": "1.0.0",
+  "name": "@redtech2024/chart-app",
   "private": false,
-  "description": "Vue3-based chart visualization application",
   "repository": {
     "type": "git",
-    "url": "https://github.com/githubusername/chart-app.git"
-  },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
+    "url": "git+https://github.com/yourusername/chart-app.git"
   },
   "version": "0.0.0",
   "type": "module",
-  "files": ["dist"],
-"main": "./dist/chart-app.umd.js",
-"module": "./dist/chart-app.es.js",
-"exports": {
-  ".": {
-    "import": "./dist/chart-app.es.js",
-    "require": "./dist/chart-app.umd.js"
-  }
-},
-"scripts": {
+  "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview"
@@ -39,5 +25,8 @@
     "unplugin-auto-import": "^19.1.1",
     "unplugin-vue-components": "^28.4.1",
     "vite": "^6.2.0"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
   }
 }
