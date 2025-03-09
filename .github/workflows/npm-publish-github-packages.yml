@@ -45,8 +45,7 @@ jobs:
         with:
           node-version: 20
           registry-url: https://npm.pkg.github.com/
-          # 确保这里使用您的实际GitHub用户名，而不是占位符
-          # scope: '@githubusername'  
+          scope: '@redtech2024'
       - uses: actions/download-artifact@v4
         with:
           name: chart-app-dist
