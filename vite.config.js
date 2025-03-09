@@ -17,5 +17,13 @@ export default defineConfig({
   ],
   server: {
     open: true
+  },
+
+  base: './',
+  build: {
+   
+    assetsDir: 'assets',
+
+    sourcemap: true
   }
 })
