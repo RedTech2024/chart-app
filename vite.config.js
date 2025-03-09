@@ -19,7 +19,7 @@ export default defineConfig({
     open: true
   },
 
-  base: './',
+  base: '/',
   build: {
    
     assetsDir: 'assets',
