@@ -14,6 +14,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -36,20 +39,20 @@ jobs:
     permissions:
       contents: read
       packages: write
-      id-token: write
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 20
           registry-url: https://npm.pkg.github.com/
-          scope: '@githubusername'  # Ensure this matches your GitHub username
+          # 确保这里使用您的实际GitHub用户名，而不是占位符
+          # scope: '@githubusername'  
       - uses: actions/download-artifact@v4
         with:
           name: chart-app-dist
           path: dist
       - run: npm pkg fix
-      - run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" > .npmrc  # Add this line
+      - run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" > .npmrc
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
