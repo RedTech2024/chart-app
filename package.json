@@ -5,7 +5,7 @@
     "type": "git",
     "url": "git+https://github.com/redtech2024/chart-app.git"
   },
-  "version": "0.0.2",
+  "version": "0.1.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
