@@ -26,6 +26,11 @@ jobs:
           registry-url: https://npm.pkg.github.com/
       - run: npm ci
       - run: npm run build
+      # 确保构建后的资源路径正确
+      - name: Fix base path in index.html
+        run: |
+          find dist -name "*.html" -exec sed -i 's|\./assets|/assets|g' {} \;
+          find dist -name "*.html" -exec sed -i 's|\./vite.svg|/vite.svg|g' {} \;
       - run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" > .npmrc
       - uses: actions/upload-artifact@v4
         with:
